@@ -5,8 +5,90 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExchangeConnectionsViewer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Exchange Connections Viewer" Height="600" Width="1000">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Text="Подключения к крипто биржам" 
+                   FontSize="24" FontWeight="Bold" Margin="20,20,20,10" 
+                   HorizontalAlignment="Center"/>
+        
+        <DataGrid Grid.Row="1" Name="ConnectionsDataGrid" 
+                  ItemsSource="{Binding Connections}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserReorderColumns="True"
+                  CanUserResizeColumns="True"
+                  CanUserResizeRows="False"
+                  GridLinesVisibility="All"
+                  HeadersVisibility="Column"
+                  Margin="20,10,20,10">
+            
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="120">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Status}" Value="Connected">
+                                    <Setter Property="Foreground" Value="Green"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Status}" Value="Disconnected">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="150"/>
+                
+                <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="100"/>
+                
+                <DataGridTextColumn Header="Last Connect" Binding="{Binding LastConnect, StringFormat=dd.MM.yyyy HH:mm}" Width="150"/>
+                
+                <DataGridTemplateColumn Header="Actions" Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="Edit" 
+                                        Width="60" Height="25" Margin="2"
+                                        Background="#007ACC" Foreground="White"
+                                        BorderThickness="0" FontSize="11"
+                                        Click="EditButtonClickHandler"/>
+                                <Button Content="Delete" 
+                                        Width="60" Height="25" Margin="2"
+                                        Background="#DC3545" Foreground="White"
+                                        BorderThickness="0" FontSize="11"
+                                        Click="DeleteButtonClickHandler"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#F0F0F0"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
+        
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,10,20,20">
+            <Button Name="AddButton" Content="Add" 
+                    Width="100" Height="35"
+                    Background="#28A745" Foreground="White"
+                    BorderThickness="0" FontSize="14" FontWeight="Bold"
+                    Click="AddButtonClickHandler"/>
+        </StackPanel>
     </Grid>
 </Window>
