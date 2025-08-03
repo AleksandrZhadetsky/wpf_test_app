@@ -25,30 +25,7 @@ public partial class MainWindow : Window
 
     private void InitializeData()
     {
-        Connections = new ObservableCollection<ExchangeConnection>
-        {
-            new ExchangeConnection 
-            { 
-                Status = "Connected", 
-                Title = "Binance", 
-                Type = "Spot", 
-                LastConnect = DateTime.Now.AddHours(-2) 
-            },
-            new ExchangeConnection 
-            { 
-                Status = "Disconnected", 
-                Title = "Coinbase", 
-                Type = "Spot", 
-                LastConnect = DateTime.Now.AddDays(-1) 
-            },
-            new ExchangeConnection 
-            { 
-                Status = "Connected", 
-                Title = "Kraken", 
-                Type = "Futures", 
-                LastConnect = DateTime.Now.AddMinutes(-30) 
-            }
-        };
+        Connections = new ObservableCollection<ExchangeConnection>();
     }
 
     private void EditButtonClickHandler(object sender, RoutedEventArgs e)

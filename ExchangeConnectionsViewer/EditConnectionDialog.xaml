@@ -21,14 +21,18 @@
 
         <!-- Title -->
         <TextBlock Grid.Column="0" Text="Название:" VerticalAlignment="Center" Height="15"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Name="TitleTextBox" Margin="10,5,0,5"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" Name="TitleComboBox" Margin="10,5,0,5">
+            <ComboBoxItem Content="ByBit"/>
+            <ComboBoxItem Content="Binance"/>
+            <ComboBoxItem Content="OKX"/>
+            <ComboBoxItem Content="Bitget"/>
+        </ComboBox>
 
         <!-- Type -->
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Тип:" VerticalAlignment="Center" Height="15"/>
         <ComboBox Grid.Row="1" Grid.Column="1" Name="TypeComboBox" Margin="10,5,0,5">
             <ComboBoxItem Content="Spot"/>
             <ComboBoxItem Content="Futures"/>
-            <ComboBoxItem Content="Margin"/>
         </ComboBox>
 
         <!-- Status -->

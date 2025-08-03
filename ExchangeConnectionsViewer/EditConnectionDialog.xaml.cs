@@ -18,8 +18,16 @@ namespace ExchangeConnectionsViewer
 
         private void LoadConnectionData()
         {
-            TitleTextBox.Text = OriginalConnection.Title;
-            
+
+            foreach (ComboBoxItem item in TitleComboBox.Items)
+            {
+                if (item.Content.ToString() == OriginalConnection.Title)
+                {
+                    TitleComboBox.SelectedItem = item;
+                    break;
+                }
+            }
+
             foreach (ComboBoxItem item in TypeComboBox.Items)
             {
                 if (item.Content.ToString() == OriginalConnection.Type)
@@ -44,13 +52,6 @@ namespace ExchangeConnectionsViewer
 
         private void OkButtonClickHandler(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(TitleTextBox.Text))
-            {
-                MessageBox.Show("Пожалуйста, введите название подключения.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                TitleTextBox.Focus();
-                return;
-            }
-
             try
             {
                 var selectedDate = DatePicker.SelectedDate ?? DateTime.Now;
@@ -69,7 +70,7 @@ namespace ExchangeConnectionsViewer
                 EditedConnection = new ExchangeConnection
                 {
                     Id = OriginalConnection.Id,
-                    Title = TitleTextBox.Text.Trim(),
+                    Title = (TitleComboBox.SelectedItem as ComboBoxItem)?.Content.ToString() ?? "ByBit",
                     Type = (TypeComboBox.SelectedItem as ComboBoxItem)?.Content.ToString() ?? "Spot",
                     Status = (StatusComboBox.SelectedItem as ComboBoxItem)?.Content.ToString() ?? "Connected",
                     LastConnect = lastConnect
