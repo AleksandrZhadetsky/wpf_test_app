@@ -6,6 +6,15 @@ namespace ExchangeConnectionsViewer
 {
     public partial class EditConnectionDialog : Window
     {
+        public static readonly RoutedEvent SaveButtonClickedEvent = EventManager.RegisterRoutedEvent(
+            "SaveButtonClicked", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(EditConnectionDialog));
+
+        public event RoutedEventHandler SaveButtonClicked
+        {
+            add { AddHandler(SaveButtonClickedEvent, value); }
+            remove { RemoveHandler(SaveButtonClickedEvent, value); }
+        }
+        
         public ExchangeConnection EditedConnection { get; private set; }
         private ExchangeConnection OriginalConnection;
 
@@ -90,5 +99,44 @@ namespace ExchangeConnectionsViewer
             DialogResult = false;
             Close();
         }
+
+        private void ConnectButtonClickHandler(object sender, RoutedEventArgs e)
+        {
+            EditedConnection = new ExchangeConnection
+            {
+                Id = OriginalConnection.Id,
+                Title = OriginalConnection.Title,
+                Type = OriginalConnection.Type,
+                Status = "Connected",
+                LastConnect = OriginalConnection.LastConnect
+            };
+
+            DialogResult = true;
+            Close();
+        }
+
+        private void DisconnectButtonClickHandler(object sender, RoutedEventArgs e)
+        {
+            EditedConnection = new ExchangeConnection
+            {
+                Id = OriginalConnection.Id,
+                Title = OriginalConnection.Title,
+                Type = OriginalConnection.Type,
+                Status = "Disconnected",
+                LastConnect = OriginalConnection.LastConnect
+            };
+
+            DialogResult = true;
+            Close();
+        }
+
+        private void SaveButtonClickHandler(object sender, RoutedEventArgs e)
+        {
+            EditedConnection = OriginalConnection;
+
+            RoutedEventArgs args = new RoutedEventArgs(SaveButtonClickedEvent, this);
+            RaiseEvent(args);
+        }
+        
     }
 } 
