@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExchangeConnectionsViewer"
         mc:Ignorable="d"
-        Title="Exchange Connections Viewer" Height="600" Width="1000">
+        Title="Exchange Connections Viewer" Height="450" Width="800">
 
     <Window.Resources>
         <Style x:Key="ButtonStyle" TargetType="Button">
@@ -64,7 +64,9 @@
                   CanUserResizeRows="False"
                   GridLinesVisibility="All"
                   HeadersVisibility="Column"
-                  Margin="20,10,20,10">
+                  AlternationCount="2"
+                  Margin="20,10,20,10"
+                  MaxHeight="250">
             
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Status" Width="*">
@@ -117,7 +119,15 @@
             
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Height" Value="50" />
                     <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=AlternationIndex}" Value="0">
+                            <Setter Property="Background" Value="#F8F9FA"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=AlternationIndex}" Value="1">
+                            <Setter Property="Background" Value="#E9ECEF"/>
+                        </DataTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="#F0F0F0"/>
                         </Trigger>
@@ -127,11 +137,7 @@
         </DataGrid>
         
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,10,20,20">
-            <Button Name="AddButton" Content="Add" 
-                    Width="100" Height="35"
-                    FontSize="14" FontWeight="Bold"
-                    Style="{StaticResource ButtonStyle}"
-                    Click="AddButtonClickHandler"/>
+            <Button Style="{StaticResource ButtonStyle}" Name="AddButton" Content="Add" Click="AddButtonClickHandler"/>
         </StackPanel>
     </Grid>
 </Window>
